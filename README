@@ -1,0 +1,12 @@
+# Reaction Time App
+
+## OverView
+This is supposed to be an app that has to main sections. The first section is the play section where you have lives and a highscore. The button is only supposed to be pressed dyring green. if you don't press it in the window it lets you, then you lose a life. Otherwise, you earn a point to the highscore. That is the main part of the game. Second part is the practice section where it's similar to the play section except that instead of generating a score, it just displays your reaction time. That reaction time is then stored or passed to a different screen where you can view your history/past reaction times. 
+
+## Running the App
+I have the emulator running (Android Studio) and then I run the app through visual studio code. You will most likely have to delete the package.lock.json file and then run npm install. Then you can run the app with npm run android.
+
+## Contributing
+If you want to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
+
+Disclaimer: This app is not finished and is still in development, but upon finishing will be posted on the app store.
