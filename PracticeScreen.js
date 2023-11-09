@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,37 +9,41 @@ export default function PracticeScreen() {
   const [buttonColor, setButtonColor] = useState('blue');
   const [startTime, setStartTime] = useState(null);
   const [reactionTimes, setReactionTimes] = useState([]);
+  const intervalRef = useRef(null);
 
   const getRandomInterval = () => {
-    return Math.floor(Math.random() * 5000) + 1000; // Random interval between 1 to 6 seconds (1000-6000 ms)
+    return Math.floor(Math.random() * 5000) + 1000;
   };
 
   const handleButtonClick = () => {
     if (buttonText === 'Start') {
       setButtonText('Wait for Green');
       setButtonColor('red');
-      const interval = getRandomInterval();
 
-      setTimeout(() => {
+      intervalRef.current = setTimeout(() => {
+        setButtonText('GREEN');
         setButtonColor('green');
         setStartTime(new Date().getTime());
-      }, interval);
-    } else if (buttonText === 'Wait for Green') {
+      }, getRandomInterval());
+    } else if (buttonText === 'GREEN') {
       const endTime = new Date().getTime();
-      const reactionTime = (endTime - startTime) / 1000; // Calculate reaction time in seconds
+      const reactionTime = (endTime - startTime) / 1000;
 
-      // Serialize the reactionTimes array to JSON format
-      const serializedReactionTimes = JSON.stringify([
+      clearInterval(intervalRef.current);
+
+      const updatedReactionTimes = [
         ...reactionTimes,
         { time: new Date().toLocaleString(), reactionTime },
-      ]);
+      ];
 
-      // Save the serialized reactionTimes in state
-      setReactionTimes(JSON.parse(serializedReactionTimes));
+      setReactionTimes(updatedReactionTimes);
 
       setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
       setButtonColor('blue');
     } else {
+      // Clear the timeout if the button is clicked before the 'GREEN' stage
+      clearTimeout(intervalRef.current);
+
       setButtonText('Start');
       setButtonColor('blue');
     }
@@ -55,7 +59,7 @@ export default function PracticeScreen() {
             serializedReactionTimes: JSON.stringify(reactionTimes),
           })
         }
-        color="red" // Set the color of the "View Records" button to red
+        color="red"
       />
     </View>
   );
@@ -75,16 +79,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   button: {
-    width: 150, // Set a fixed width for the buttons (adjust as needed)
+    width: 150,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginVertical: 10,
     alignItems: 'center',
-    borderRadius: 10, // Rounded button corners
-    shadowColor: 'rgba(0, 0, 0, 0.3)', // Shadow color for a subtle effect
+    borderRadius: 10,
+    shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5, // Adjust shadow opacity
-    elevation: 2, // Add elevation for Android shadow
+    shadowOpacity: 0.5,
+    elevation: 2,
   },
   buttonText: {
     color: 'white',
