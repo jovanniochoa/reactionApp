@@ -10,6 +10,8 @@ export default function PlayScreen() {
   const [startTime, setStartTime] = useState(null);
   const [reactionTimes, setReactionTimes] = useState([]);
   const [lives, setLives] = useState(3); // Initialize with 3 lives
+  const [score, setScore] = useState(0); // Initialize score
+
   const intervalRef = useRef(null);
 
   const getRandomInterval = () => {
@@ -48,6 +50,7 @@ export default function PlayScreen() {
       // Check if the button was pressed in the interval
       if (reactionTime <= 5) {
         // Update the scoreboard and reset the game
+        setScore((prevScore) => prevScore + 1); // Increment score
         setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
         setButtonColor('blue');
       } else {
@@ -84,6 +87,7 @@ export default function PlayScreen() {
   return (
     <View style={styles.appContainer}>
       <Text style={styles.livesText}>Lives: {lives}</Text>
+      <Text style={styles.scoreText}>Score: {score}</Text>
       <CustomButton title={buttonText} onPress={handleButtonClick} color={buttonColor} />
       <CustomButton
         title="History"
@@ -128,6 +132,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   livesText: {
+    color: 'white',
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  scoreText: {
     color: 'white',
     fontSize: 20,
     marginBottom: 10,
