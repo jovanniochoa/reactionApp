@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Audio } from 'expo-av'; // Import Audio from Expo AV
+
 
 export default function PlayScreen() {
   const navigation = useNavigation();
@@ -18,6 +20,44 @@ export default function PlayScreen() {
     return Math.floor(Math.random() * 5000) + 1000;
   };
 
+  const playCoinSound = async () => {
+    const soundObject = new Audio.Sound();
+
+    try {
+      await soundObject.loadAsync(require('./Coin.wav'));
+      await soundObject.setVolumeAsync(0.5); // Adjust the volume as needed (0.5 represents half of the max volume)
+      await soundObject.playAsync();
+      // Your logic after the sound plays goes here
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
+  const playDogDieSound = async () => {
+    const soundObject = new Audio.Sound();
+  
+    try {
+      await soundObject.loadAsync(require('./DogDieSound.wav'));
+      await soundObject.setVolumeAsync(1); // Adjust the volume as needed (0.5 represents half of the max volume)
+      await soundObject.playAsync();
+      // Your logic after the sound plays goes here
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
+  const playGameDieSound = async () => {
+    const soundObject = new Audio.Sound();
+  
+    try {
+      await soundObject.loadAsync(require('./GameDie.mp3'));
+      await soundObject.playAsync();
+      // Your logic after the sound plays goes here
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
   const handleButtonClick = () => {
     if (buttonText === 'Start') {
       setButtonText('Wait for Green');
@@ -31,6 +71,13 @@ export default function PlayScreen() {
         // Set a timer to reset the game if GREEN button is not clicked within 3 seconds
         intervalRef.current = setTimeout(() => {
           setLives((prevLives) => prevLives - 1);
+          playDogDieSound(); // Play the DogDieSound.wav sound
+
+          if (lives === 0) {
+            playGameDieSound(); // Play the GameDie.wav sound
+            // Additional logic or actions when the game ends
+          }
+
           resetGame();
         }, 3000);
       }, getRandomInterval());
@@ -49,6 +96,7 @@ export default function PlayScreen() {
 
       // Check if the button was pressed in the interval
       if (reactionTime <= 5) {
+        playCoinSound(); // Play the coin sound
         // Update the scoreboard and reset the game
         setScore((prevScore) => prevScore + 1); // Increment score
         setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
