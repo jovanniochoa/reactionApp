@@ -76,7 +76,7 @@ export default function PlayScreen() {
             // Show game over pop-up
             Alert.alert(
               'Game Over',
-              'You have lost all your lives.',
+              `Your final score is: ${score}`,
               [
                 {
                   text: 'OK',
