@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av'; // Import Audio from Expo AV
 
@@ -70,12 +70,24 @@ export default function PlayScreen() {
 
         // Set a timer to reset the game if GREEN button is not clicked within 3 seconds
         intervalRef.current = setTimeout(() => {
-          setLives((prevLives) => prevLives - 1);
-          playDogDieSound(); // Play the DogDieSound.wav sound
-
-          if (lives === 0) {
+          if (lives === 1) {
             playGameDieSound(); // Play the GameDie.wav sound
-            // Additional logic or actions when the game ends
+      
+            // Show game over pop-up
+            Alert.alert(
+              'Game Over',
+              'You have lost all your lives.',
+              [
+                {
+                  text: 'OK',
+                  onPress: () => navigation.navigate('Main'), // Navigate back to MainScreen
+                },
+              ],
+              { cancelable: false }
+            );
+          } else {
+            setLives((prevLives) => prevLives - 1)
+            playDogDieSound(); // Play the DogDieSound.wav sound
           }
 
           resetGame();

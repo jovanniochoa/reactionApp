@@ -68,9 +68,9 @@ const MainScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>React Master</Text>
-      <CustomButton title="Toggle Music" onPress={handleToggleButtonClick} />
       <CustomButton title="Play" onPress={() => navigation.navigate('Play')} />
       <CustomButton title="Practice" onPress={() => navigation.navigate('Practice')} />
+      <CustomButton title="Toggle Music" onPress={handleToggleButtonClick} />
     </View>
   );
 };
