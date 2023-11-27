@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av'; // Import Audio from Expo AV
 
@@ -144,20 +144,33 @@ export default function PlayScreen() {
     };
   }, []);
 
+  const hearts = Array.from({ length: lives }, (_, index) => index); // Create an array representing the number of lives
+
+
   return (
     <View style={styles.appContainer}>
-      <Text style={styles.livesText}>Lives: {lives}</Text>
-      <Text style={styles.scoreText}>Score: {score}</Text>
+      <View style={styles.topRightContainer}>
+      {hearts.map((_, index) => (
+          <Image
+            key={`heart_${index}`}
+            source={require('./Heart.png')} // Replace this with the correct path to your image
+            style={styles.heartImage}
+          />
+        ))}
+      </View>
+      <View style={styles.contentContainer}>
+        <Text style={styles.scoreText}>Score: {score}</Text>
       <CustomButton title={buttonText} onPress={handleButtonClick} color={buttonColor} />
-      <CustomButton
-        title="History"
-        onPress={() =>
-          navigation.navigate('Records', {
-            serializedReactionTimes: JSON.stringify(reactionTimes),
-          })
-        }
-        color="red"
-      />
+        <CustomButton
+          title="History"
+          onPress={() =>
+            navigation.navigate('Records', {
+              serializedReactionTimes: JSON.stringify(reactionTimes),
+            })
+          }
+          color="red"
+        />
+      </View>
     </View>
   );
 }
@@ -173,7 +186,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#282c34',
+    position: 'relative', // Add this to make the lives and score text appear on top of the button
+  },
+  topRightContainer: {
+    flexDirection: 'row', // Display items horizontally
+    position: 'absolute',
+    top: 20,
+    right: 40,
+    zIndex: 1,
+  },
+  heartImage: {
+    width: 50, // Adjust the width of the heart image as needed
+    height: 50, // Adjust the height of the heart image as needed
+    marginRight: -30, // Adjust the spacing between hearts as needed
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50, // Adjust the top padding for content
   },
   button: {
     width: 150,
