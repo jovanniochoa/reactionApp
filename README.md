@@ -1,4 +1,4 @@
-# FutureWave Studio
+# React Master
 
 This repository contains the code for an app by our company. If you wish to view other apps build by FutureWave Studio feel free to check them out at [FutureWave Studio](https://futurewavestudio.com).
 
