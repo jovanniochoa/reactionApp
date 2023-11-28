@@ -91,6 +91,7 @@ export default function PlayScreen() {
           } else {
             setLives((prevLives) => prevLives - 1)
             playDogDieSound(); // Play the DogDieSound.wav sound
+            lottieRef.current.play(); // Play the animation
           }
 
           resetGame();
@@ -112,7 +113,6 @@ export default function PlayScreen() {
       // Check if the button was pressed in the interval
       if (reactionTime <= 5) {
         playCoinSound(); // Play the coin sound
-        lottieRef.current.play();
         // Update the scoreboard and reset the game
         setScore((prevScore) => prevScore + 1); // Increment score
         setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
@@ -170,6 +170,9 @@ export default function PlayScreen() {
         ))}
       </View>
       <View style={styles.contentContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.eatText}>Eat When He Stops Moving</Text>
+        </View>
         <View style={styles.topLeftContainer}>
           <Text style={styles.scoreText}>Score: {score}</Text>
         </View>
@@ -269,9 +272,21 @@ const styles = StyleSheet.create({
     width: 200, // Adjust the width of the animation
     height: 200, // Adjust the height of the animation
     position: 'absolute',
-    top: '25%', // Adjust the position of the animation vertically
-    left: '60%', // Adjust the position of the animation horizontally
+    top: '27%', // Adjust the position of the animation vertically
+    left: '58%', // Adjust the position of the animation horizontally
     transform: [{ translateX: -100 }, { translateY: -100 }], // Center the animation
     zIndex: 1, // Ensure it's on top of other elements if needed
+  },
+  textContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '10%', // Adjust the position of the text vertically
+    width: '100%',
+  },
+  eatText: {
+    color: 'red',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
