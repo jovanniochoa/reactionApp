@@ -150,7 +150,7 @@ export default function PlayScreen() {
   return (
     <View style={styles.appContainer}>
       <View style={styles.topRightContainer}>
-      {hearts.map((_, index) => (
+        {hearts.map((_, index) => (
           <Image
             key={`heart_${index}`}
             source={require('./Heart.png')} // Replace this with the correct path to your image
@@ -159,8 +159,14 @@ export default function PlayScreen() {
         ))}
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.scoreText}>Score: {score}</Text>
-      <CustomButton title={buttonText} onPress={handleButtonClick} color={buttonColor} />
+        <View style={styles.topLeftContainer}>
+          <Text style={styles.scoreText}>Score: {score}</Text>
+        </View>
+        <CustomButton title={buttonText} onPress={handleButtonClick} color={buttonColor} />
+        <Image
+          source={require('./Fox.png')} // Replace this with the correct path to your image
+          style={styles.foxImage}
+        />
         <CustomButton
           title="History"
           onPress={() =>
@@ -188,6 +194,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#282c34',
     position: 'relative', // Add this to make the lives and score text appear on top of the button
+  },
+  topLeftContainer: {
+    position: 'absolute',
+    top: 30,
+    left: -70,
+    zIndex: 1,
   },
   topRightContainer: {
     flexDirection: 'row', // Display items horizontally
@@ -232,5 +244,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     marginBottom: 10,
+  },
+  foxImage: {
+    width: 150, // Adjust the width of the fox image as needed
+    height: 150, // Adjust the height of the fox image as needed
+    position: 'absolute',
+    top: '33%', // Adjust the position of the fox image vertically
+    left: -90, // Adjust the position of the fox image horizontally
+    transform: [{ translateY: -50 }], // Center the fox image vertically
+    zIndex: 1,
   },
 });
