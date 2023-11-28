@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av'; // Import Audio from Expo AV
+import LottieView from 'lottie-react-native';
+
 
 
 export default function PlayScreen() {
@@ -13,7 +15,7 @@ export default function PlayScreen() {
   const [reactionTimes, setReactionTimes] = useState([]);
   const [lives, setLives] = useState(3); // Initialize with 3 lives
   const [score, setScore] = useState(0); // Initialize score
-
+  const lottieRef = useRef(null); // Create a reference to the LottieView component
   const intervalRef = useRef(null);
 
   const getRandomInterval = () => {
@@ -67,6 +69,7 @@ export default function PlayScreen() {
         setButtonText('GREEN');
         setButtonColor('green');
         setStartTime(new Date().getTime());
+        lottieRef.current.pause(); // Pause the animation
 
         // Set a timer to reset the game if GREEN button is not clicked within 3 seconds
         intervalRef.current = setTimeout(() => {
@@ -109,6 +112,7 @@ export default function PlayScreen() {
       // Check if the button was pressed in the interval
       if (reactionTime <= 5) {
         playCoinSound(); // Play the coin sound
+        lottieRef.current.play();
         // Update the scoreboard and reset the game
         setScore((prevScore) => prevScore + 1); // Increment score
         setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
@@ -149,6 +153,13 @@ export default function PlayScreen() {
 
   return (
     <View style={styles.appContainer}>
+      <LottieView
+        ref={lottieRef} // Set the reference for the LottieView component
+        source={require('./WalkingBurger.json')} // Replace this with the correct path to your Lottie animation file
+        autoPlay={true}
+        loop={true} // Ensure the loop is explicitly set to true
+        style={styles.lottieAnimation} // Add or adjust styles as needed
+      />
       <View style={styles.topRightContainer}>
         {hearts.map((_, index) => (
           <Image
@@ -253,5 +264,14 @@ const styles = StyleSheet.create({
     left: -90, // Adjust the position of the fox image horizontally
     transform: [{ translateY: -50 }], // Center the fox image vertically
     zIndex: 1,
+  },
+  lottieAnimation: {
+    width: 200, // Adjust the width of the animation
+    height: 200, // Adjust the height of the animation
+    position: 'absolute',
+    top: '25%', // Adjust the position of the animation vertically
+    left: '60%', // Adjust the position of the animation horizontally
+    transform: [{ translateX: -100 }, { translateY: -100 }], // Center the animation
+    zIndex: 1, // Ensure it's on top of other elements if needed
   },
 });
