@@ -113,6 +113,7 @@ export default function PlayScreen() {
       // Check if the button was pressed in the interval
       if (reactionTime <= 5) {
         playCoinSound(); // Play the coin sound
+        lottieRef.current.play(); // Play the animation
         // Update the scoreboard and reset the game
         setScore((prevScore) => prevScore + 1); // Increment score
         setButtonText(`Reaction Time: ${reactionTime.toFixed(2)}s`);
