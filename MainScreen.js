@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
-
+import LottieView from 'lottie-react-native'; // Import LottieView
+import animationData from './BackgroundLottie.json';
 import { MusicContext } from './MusicContext';
 
 const MainScreen = () => {
@@ -67,6 +68,12 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
+      <LottieView
+        source={require('./BackgroundLottie.json')} // Replace this with the correct path to your Lottie animation file
+        autoPlay={true}
+        loop={true} // Ensure the loop is explicitly set to true
+        style={styles.lottieAnimation} // Add or adjust styles as needed
+      />
       <Text style={styles.title}>React Master</Text>
       <CustomButton title="Play" onPress={() => navigation.navigate('Play')} />
       <CustomButton title="Practice" onPress={() => navigation.navigate('Practice')} />
