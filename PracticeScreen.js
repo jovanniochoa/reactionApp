@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native'; // Import LottieView
+
 
 export default function PracticeScreen() {
   const navigation = useNavigation();

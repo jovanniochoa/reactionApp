@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import LottieView from 'lottie-react-native'; // Import LottieView
-import animationData from './BackgroundLottie.json';
 import { MusicContext } from './MusicContext';
 
 const MainScreen = () => {
