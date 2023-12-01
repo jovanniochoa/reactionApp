@@ -74,7 +74,7 @@ export default function PlayScreen() {
         // Set a timer to reset the game if GREEN button is not clicked within 3 seconds
         intervalRef.current = setTimeout(() => {
           if (lives === 1) {
-            playGameDieSound(); // Play the GameDie.wav sound
+            playGameDieSound(); // Play the GameDie.wav sound effect
       
             // Show game over pop-up
             Alert.alert(
@@ -156,7 +156,8 @@ export default function PlayScreen() {
     <View style={styles.appContainer}>
       <LottieView
         ref={lottieRef} // Set the reference for the LottieView component
-        source={require('./WalkingBurger.json')} // Replace this with the correct path to your Lottie animation file
+        source={require('./WalkingBurger.json')} // Replace this wi
+        th the correct path to your Lottie animation file
         autoPlay={true}
         loop={true} // Ensure the loop is explicitly set to true
         style={styles.lottieAnimation} // Add or adjust styles as needed
